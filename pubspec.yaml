@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.1.0
   convex_bottom_bar: ^3.0.0
+  carousel_slider: ^4.0.0
+  url_launcher: ^6.0.13
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,10 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/list.png
+    - assets/receive-task.gif
+    - assets/sent-task.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

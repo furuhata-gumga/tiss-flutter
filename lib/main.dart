@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tiss_example/presentation_screen/presentation.dart';
 
 import 'my_home_page.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         // )
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      // home: const MyHomePage(),
+      home: const Presentation(),
     );
   }
 }
