@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:tiss_example/login/flag_and_code_icon.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   int _currentStep = 1;
   TextEditingController _phoneNumberController = TextEditingController();
+  String initialCountry = 'BR';
+  PhoneNumber number = PhoneNumber(isoCode: 'BR');
 
   void goToLogin(){
     print (_phoneNumberController.text);
@@ -53,30 +56,82 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(
                         width: 300,
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          controller: _phoneNumberController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            TelefoneInputFormatter(),
-                          ],
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: const BorderSide(
-                                width: 0,
-                                style: BorderStyle.none
-                              )
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: const Color(0xFFF5F5F5),
+                          ),
+                          height: 70,
+                          padding: const EdgeInsets.only(left: 12, right: 8),
+                          child: InternationalPhoneNumberInput(
+                            onInputChanged: (PhoneNumber number) {
+                              print(number.phoneNumber);
+                            },
+                            onInputValidated: (bool value) {
+                              print(value);
+                            },
+                            selectorConfig: const SelectorConfig(
+                              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                             ),
-                            filled: true,
-                            fillColor: const Color(0xFFF5F5F5),
-                            prefixIcon: const FlagAndCodeIcon(),
+                            ignoreBlank: false,
+                            hintText: "",
+                            errorMessage: "Número de telefone inválido",
+                            autoValidateMode: AutovalidateMode.disabled,
+                            selectorTextStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold
+                            ),
+                            initialValue: number,
+                            textFieldController: _phoneNumberController,
+                            formatInput: true,
+                            keyboardType:
+                            const TextInputType.numberWithOptions(signed: true, decimal: true),
+                            // inputBorder: InputBorder.none,
+                            inputDecoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none
+                                ),
+                              ),
+                            ),
+                            searchBoxDecoration: const InputDecoration(
+                              labelText: "Busque por país ou código telefônico"
+                            ),
+                            textStyle: const TextStyle(
+                              color: Color(0xFF00c9ff),
+                              fontWeight: FontWeight.bold
+                            ),
+                            locale: "pt_BR",
+                            onSaved: (PhoneNumber number) {
+                              print('On Saved: $number');
+                            },
                           ),
-                          style: const TextStyle(
-                            color: Color(0xFF00c9ff),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        )
+                        // child: TextField(
+                        //   keyboardType: TextInputType.number,
+                        //   controller: _phoneNumberController,
+                        //   inputFormatters: [
+                        //     FilteringTextInputFormatter.digitsOnly,
+                        //     TelefoneInputFormatter(),
+                        //   ],
+                        //   decoration: InputDecoration(
+                        //     border: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(30.0),
+                        //       borderSide: const BorderSide(
+                        //         width: 0,
+                        //         style: BorderStyle.none
+                        //       )
+                        //     ),
+                        //     filled: true,
+                        //     fillColor: const Color(0xFFF5F5F5),
+                        //     prefixIcon: const FlagAndCodeIcon(),
+                        //   ),
+                        //   style: const TextStyle(
+                        //     color: Color(0xFF00c9ff),
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 34),
